@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>기깔난 음식 룰렛</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <!-- ✅ html2canvas 추가 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+    <h1>🍽 기깔난 음식 추천해줄게</h1>
+
+    <div id="roulette-container"
+         data-foods='{{ foods|tojson|safe }}'
+         data-food-messages='{{ food_messages|tojson|safe }}'>
+        <canvas id="wheel" width="400" height="400"></canvas>
+        <div id="needle"></div>
+    </div>
+
+    <button id="spin-btn" type="button">🎯 돌리기!</button>
+
+    <p id="result"></p>
+
+    <!-- ✅ 자바스크립트 연결 -->
+    <script src="{{ url_for('static', filename='roulette.js') }}" defer></script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>룰렛 게임</title>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; }
+    #roulette { width: 300px; height: 300px; border: 5px solid #333; border-radius: 50%; margin: 20px auto; }
+    #result { margin: 20px; font-size: 20px; font-weight: bold; }
+    #buttons { display: none; margin: 20px; }
+    #buttons button { margin: 0 10px; padding: 10px 20px; font-size: 16px; }
+    #shared-result { margin: 20px; font-size: 22px; font-weight: bold; color: #d35400; }
+  </style>
+</head>
+<body>
+  
