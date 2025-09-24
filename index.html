@@ -1,44 +1,43 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <title>기깔난 음식 룰렛</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-
-    <!-- ✅ html2canvas 추가 -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <meta charset="UTF-8">
+  <title>기깔난 음식 룰렛</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <body>
-    <h1>🍽 기깔난 음식 추천해줄게</h1>
+  <h1>🍽 기깔난 음식 추천해줄게</h1>
 
-    <div id="roulette-container"
-         data-foods='{{ foods|tojson|safe }}'
-         data-food-messages='{{ food_messages|tojson|safe }}'>
-        <canvas id="wheel" width="400" height="400"></canvas>
-        <div id="needle"></div>
-    </div>
+  <!-- Flask 문법 제거하고 직접 값 넣기 -->
+  <div id="roulette-container"
+       data-foods='["김밥","떡볶이","삼겹살","라면","치킨","김치찌개","불고기","된장찌개","비빔밥","떡국","짜장면","스팸","부대찌개","삼계탕","김치전","국밥"]'
+       data-food-messages='{
+         "김밥":"김밥 먹고 인생 말면 안 된다~",
+         "떡볶이":"엽떡 땡긴다ㅠㅠ",
+         "삼겹살":"기름기 봐라 ㄷㄷ",
+         "라면":"밥 말아서 국물까지 군침 돈다",
+         "치킨":"치느님은 못 참지~",
+         "김치찌개":"울 할머니가 진짜 잘했는데 ㅠㅠ",
+         "불고기":"급식에 이거 나오면 두 그릇 먹음ㅋㅋ",
+         "된장찌개":"고깃집 된찌가 겁나 맛있는데",
+         "비빔밥":"전주 비빔밥 맛있겠노",
+         "떡국":"설날에 왜 떡국먹는 거지?",
+         "짜장면":"밥까지 비벼서 먹고 싶다ㅠㅠ",
+         "스팸":"밥 한 숟가락 떠서 올려 먹으면 세상 다 가진 기분인데 ㅋㅋ",
+         "부대찌개":"군대 생각나서 짜증나네",
+         "삼계탕":"이열치열이라고 하는데 난 이해 못 함ㅋㅋ",
+         "김치전":"김치전에 막걸리하고 싶음",
+         "국밥":"이거 잘못 먹으면 입천장 아작 남 ㅋㅋ"
+       }'>
+    <canvas id="wheel" width="400" height="400"></canvas>
+    <div id="needle"></div>
+  </div>
 
-    <button id="spin-btn" type="button">🎯 돌리기!</button>
+  <button id="spin-btn" type="button">🎯 돌리기!</button>
+  <p id="result"></p>
 
-    <p id="result"></p>
-
-    <!-- ✅ 자바스크립트 연결 -->
-    <script src="{{ url_for('static', filename='roulette.js') }}" defer></script>
+  <!-- Flask 문법 대신 그냥 파일 경로 -->
+  <script src="roulette.js" defer></script>
 </body>
 </html>
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <title>룰렛 게임</title>
-  <style>
-    body { font-family: Arial, sans-serif; text-align: center; }
-    #roulette { width: 300px; height: 300px; border: 5px solid #333; border-radius: 50%; margin: 20px auto; }
-    #result { margin: 20px; font-size: 20px; font-weight: bold; }
-    #buttons { display: none; margin: 20px; }
-    #buttons button { margin: 0 10px; padding: 10px 20px; font-size: 16px; }
-    #shared-result { margin: 20px; font-size: 22px; font-weight: bold; color: #d35400; }
-  </style>
-</head>
-<body>
-  
